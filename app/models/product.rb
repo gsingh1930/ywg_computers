@@ -8,8 +8,12 @@ class Product < ApplicationRecord
   validates :unit_price, presence: true, numericality: { greater_than: 0 }
   validates :stock_quantity, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
+  scope :on_sale, -> { where(on_sale: true) }
+  scope :new_products, -> { where("created_at >= ?", 3.days.ago) }
+  scope :recently_updated, -> { where("updated_at >= ? AND created_at < ?", 3.days.ago, 3.days.ago) }
+
   def self.ransackable_attributes(auth_object = nil)
-    [ "id", "name", "description", "stock_quantity", "unit_price", "category_id", "created_at", "updated_at" ]
+    [ "id", "name", "description", "stock_quantity", "unit_price", "category_id", "on_sale", "sale_price", "created_at", "updated_at" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
