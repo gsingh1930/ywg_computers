@@ -1,0 +1,55 @@
+<h1 class="mb-4"><i class="bi bi-cart3"></i> Your Shopping Cart</h1>
+
+<% if @cart_items.empty? %>
+  <div class="alert alert-info">
+    Your cart is empty. <%= link_to 'Continue shopping', products_path %>
+  </div>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cart_items.each do |item| %>
+          <tr>
+            <td>
+              <%= link_to item[:product].name, product_path(item[:product]) %>
+            </td>
+            <td>$<%= number_with_precision(item[:product].unit_price, precision: 2) %></td>
+            <td>
+              <%= form_tag update_cart_path(item[:product].id), method: :patch, class: 'd-flex align-items-center gap-2' do %>
+                <%= number_field_tag :quantity, item[:quantity], min: 0, class: 'form-control', style: 'width: 80px;' %>
+                <%= submit_tag 'Update', class: 'btn btn-sm btn-outline-primary' %>
+              <% end %>
+            </td>
+            <td>$<%= number_with_precision(item[:item_total], precision: 2) %></td>
+            <td>
+              <%= link_to remove_from_cart_path(item[:product].id), method: :delete, data: { turbo_method: :delete }, class: 'btn btn-sm btn-danger' do %>
+                <i class="bi bi-trash"></i> Remove
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr class="table-success">
+          <td colspan="3" class="text-end"><strong>Subtotal:</strong></td>
+          <td><strong>$<%= number_with_precision(@cart_total, precision: 2) %></strong></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-between mt-4">
+    <%= link_to 'Continue Shopping', products_path, class: 'btn btn-outline-secondary' %>
+    <%= link_to 'Proceed to Checkout', '#', class: 'btn btn-success btn-lg' %>
+  </div>
+<% end %>

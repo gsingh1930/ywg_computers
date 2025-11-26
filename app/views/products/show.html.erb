@@ -25,9 +25,9 @@
     </div>
 
     <div class="mt-4">
-      <button class="btn btn-success btn-lg">
+      <%= link_to add_to_cart_path(@product), method: :post, data: { turbo_method: :post }, class: 'btn btn-success btn-lg' do %>
         <i class="bi bi-cart-plus"></i> Add to Cart
-      </button>
+      <% end %>
       <%= link_to 'Back to Products', products_path, class: 'btn btn-outline-secondary btn-lg' %>
     </div>
   </div>
