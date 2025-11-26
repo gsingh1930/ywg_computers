@@ -1,2 +1,19 @@
-<h1>Categories#show</h1>
-<p>Find me in app/views/categories/show.html.erb</p>
+<h1 class="mb-4"><%= @category.name %></h1>
+<p class="lead"><%= @category.description %></p>
+
+<div class="row">
+  <% @products.each do |product| %>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title"><%= product.name %></h5>
+          <p class="card-text"><%= truncate(product.description, length: 80) %></p>
+          <p class="h5 text-success">$<%= number_with_precision(product.unit_price, precision: 2) %></p>
+        </div>
+        <div class="card-footer">
+          <%= link_to 'View Details', product_path(product), class: 'btn btn-primary w-100' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
