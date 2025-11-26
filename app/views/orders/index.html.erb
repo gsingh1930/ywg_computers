@@ -1,0 +1,38 @@
+<h1 class="mb-4"><i class="bi bi-bag-check"></i> My Orders</h1>
+
+<% if @orders.empty? %>
+  <div class="alert alert-info">
+    You haven't placed any orders yet. <%= link_to 'Start shopping', products_path %>
+  </div>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>Order #</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td>#<%= order.id %></td>
+            <td><%= order.created_at.strftime('%B %d, %Y') %></td>
+            <td>
+              <span class="badge bg-<%= order.status == 'paid' ? 'success' : order.status == 'shipped' ? 'info' : 'warning' %>">
+                <%= order.status.capitalize %>
+              </span>
+            </td>
+            <td>$<%= number_with_precision(order.total, precision: 2) %></td>
+            <td>
+              <%= link_to 'View', order_path(order), class: 'btn btn-sm btn-primary' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

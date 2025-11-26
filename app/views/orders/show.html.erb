@@ -1,0 +1,75 @@
+<h1 class="mb-4"><i class="bi bi-receipt"></i> Order #<%= @order.id %></h1>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card mb-4">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Order Details</h5>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @order.order_items.each do |item| %>
+              <tr>
+                <td><%= item.product.name %></td>
+                <td><%= item.quantity %></td>
+                <td>$<%= number_with_precision(item.product.unit_price, precision: 2) %></td>
+                <td>$<%= number_with_precision(item.product.unit_price * item.quantity, precision: 2) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card mb-4">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Summary</h5>
+      </div>
+      <div class="card-body">
+        <p><strong>Status:</strong>
+          <span class="badge bg-<%= @order.status == 'paid' ? 'success' : @order.status == 'shipped' ? 'info' : 'warning' %>">
+            <%= @order.status.capitalize %>
+          </span>
+        </p>
+        <p><strong>Date:</strong> <%= @order.created_at.strftime('%B %d, %Y') %></p>
+        <hr>
+        <p>Subtotal: $<%= number_with_precision(@order.subtotal, precision: 2) %></p>
+        <% if @order.gst_total > 0 %>
+          <p>GST: $<%= number_with_precision(@order.gst_total, precision: 2) %></p>
+        <% end %>
+        <% if @order.pst_total > 0 %>
+          <p>PST: $<%= number_with_precision(@order.pst_total, precision: 2) %></p>
+        <% end %>
+        <% if @order.hst_total > 0 %>
+          <p>HST: $<%= number_with_precision(@order.hst_total, precision: 2) %></p>
+        <% end %>
+        <hr>
+        <h4 class="text-success">Total: $<%= number_with_precision(@order.total, precision: 2) %></h4>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Shipping Address</h5>
+      </div>
+      <div class="card-body">
+        <p><%= @order.address.street %></p>
+        <p><%= @order.address.city %>, <%= @order.address.province.abbreviation %></p>
+        <p><%= @order.address.postal_code %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to 'Back to Orders', orders_path, class: 'btn btn-outline-secondary mt-3' %>
