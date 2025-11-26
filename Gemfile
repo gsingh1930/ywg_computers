@@ -38,7 +38,7 @@ gem "devise"
 gem "activeadmin"
 
 # CSS Framework
-
+gem "sprockets-rails"
 
 # Pagination
 gem "kaminari"

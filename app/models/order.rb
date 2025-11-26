@@ -7,4 +7,12 @@ class Order < ApplicationRecord
   validates :status, presence: true
   validates :subtotal, presence: true
   validates :total, presence: true
+
+  def self.ransackable_attributes(auth_object = nil)
+    [ "id", "subtotal", "gst_total", "pst_total", "hst_total", "total", "status", "user_id", "address_id", "created_at", "updated_at" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [ "user", "address", "order_items", "products" ]
+  end
 end
