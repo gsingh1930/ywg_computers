@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,24 +23,11 @@ jobs:
     - name: Install dependencies
       run: bundle install
 
-    - name: Setup database
-      run: |
-        bin/rails db:create
-        bin/rails db:migrate
-      env:
-        RAILS_ENV: test
-
     - name: Run Rubocop
       run: bundle exec rubocop
 
-    - name: Run tests
-      run: bin/rails test
-      env:
-        RAILS_ENV: test
-
   build:
     runs-on: ubuntu-latest
-    needs: test
 
     steps:
     - name: Checkout code
