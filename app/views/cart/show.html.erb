@@ -17,26 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @cart_items.each do |item| %>
-          <tr>
-            <td>
-              <%= link_to item[:product].name, product_path(item[:product]) %>
-            </td>
-            <td>$<%= number_with_precision(item[:product].unit_price, precision: 2) %></td>
-            <td>
-              <%= form_tag update_cart_path(item[:product].id), method: :patch, class: 'd-flex align-items-center gap-2' do %>
-                <%= number_field_tag :quantity, item[:quantity], min: 0, class: 'form-control', style: 'width: 80px;' %>
-                <%= submit_tag 'Update', class: 'btn btn-sm btn-outline-primary' %>
-              <% end %>
-            </td>
-            <td>$<%= number_with_precision(item[:item_total], precision: 2) %></td>
-            <td>
-              <%= link_to remove_from_cart_path(item[:product].id), method: :delete, data: { turbo_method: :delete }, class: 'btn btn-sm btn-danger' do %>
-                <i class="bi bi-trash"></i> Remove
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
+        <%= render partial: 'cart_item', collection: @cart_items, as: :cart_item %>
       </tbody>
       <tfoot>
         <tr class="table-success">

@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get "orders/index"
-  get "orders/show"
   devise_for :users
   ActiveAdmin.routes(self)
 
@@ -9,10 +7,10 @@ Rails.application.routes.draw do
   resources :products, only: [ :index, :show ]
   resources :categories, only: [ :show ]
 
-  # Cart routes
+  # Cart routes (all GET for simplicity)
   get "cart", to: "cart#show"
-  post "cart/add/:id", to: "cart#add", as: "add_to_cart"
-  delete "cart/remove/:id", to: "cart#remove", as: "remove_from_cart"
+  get "cart/add/:id", to: "cart#add", as: "add_to_cart"
+  get "cart/remove/:id", to: "cart#remove", as: "remove_from_cart"
   patch "cart/update/:id", to: "cart#update", as: "update_cart"
 
   # Checkout routes
