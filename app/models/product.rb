@@ -3,6 +3,8 @@ class Product < ApplicationRecord
   has_many :order_items
   has_many :orders, through: :order_items
 
+  has_one_attached :image
+
   validates :name, presence: true
   validates :description, presence: true
   validates :unit_price, presence: true, numericality: { greater_than: 0 }
@@ -17,6 +19,6 @@ class Product < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ "category", "order_items", "orders" ]
+    [ "category", "order_items", "orders", "image_attachment", "image_blob" ]
   end
 end
