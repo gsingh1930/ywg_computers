@@ -86,3 +86,21 @@ For online orders, please email orders@ywgcomputers.ca"
 end
 
 puts "Created About and Contact pages"
+
+# Create Tags
+tags = [ 'Gaming', 'Professional', 'Budget', 'High-End', 'RGB', 'Wireless', 'Portable' ]
+
+tags.each do |tag_name|
+  Tag.find_or_create_by!(name: tag_name)
+end
+
+puts "Created #{Tag.count} tags"
+
+# Assign random tags to products
+Product.all.each do |product|
+  product.tags << Tag.all.sample(rand(1..3))
+rescue ActiveRecord::RecordInvalid
+  # Skip if duplicate
+end
+
+puts "Assigned tags to products"

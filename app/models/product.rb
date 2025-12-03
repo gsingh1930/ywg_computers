@@ -2,6 +2,8 @@ class Product < ApplicationRecord
   belongs_to :category
   has_many :order_items
   has_many :orders, through: :order_items
+  has_many :product_tags, dependent: :destroy
+  has_many :tags, through: :product_tags
 
   has_one_attached :image
 
@@ -19,6 +21,6 @@ class Product < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ "category", "order_items", "orders", "image_attachment", "image_blob" ]
+    [ "category", "order_items", "orders", "image_attachment", "image_blob", "product_tags", "tags" ]
   end
 end

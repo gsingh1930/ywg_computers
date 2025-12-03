@@ -20,7 +20,9 @@
 
     <h1><%= @product.name %></h1>
     <p class="badge bg-secondary"><%= @product.category.name %></p>
-
+    <% @product.tags.each do |tag| %>
+      <span class="badge bg-info"><%= tag.name %></span>
+    <% end %>
     <p class="lead mt-3"><%= @product.description %></p>
 
     <div class="mt-4">
