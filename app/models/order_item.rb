@@ -9,11 +9,11 @@ class OrderItem < ApplicationRecord
     unit_price * quantity
   end
 
-  def self.ransackable_attributes(auth_object = nil)
-    [ "id", "quantity", "unit_price", "order_id", "product_id", "created_at", "updated_at" ]
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id quantity unit_price order_id product_id created_at updated_at]
   end
 
-  def self.ransackable_associations(auth_object = nil)
-    [ "order", "product" ]
+  def self.ransackable_associations(_auth_object = nil)
+    %w[order product]
   end
 end

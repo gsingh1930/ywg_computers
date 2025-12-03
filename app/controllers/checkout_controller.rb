@@ -11,22 +11,22 @@ class CheckoutController < ApplicationController
 
   def process_order
     # Create or find address
-    if params[:address_id].present?
-      @address = current_user.addresses.find(params[:address_id])
-    else
-      @address = current_user.addresses.create!(
-        street: params[:street],
-        city: params[:city],
-        postal_code: params[:postal_code],
-        province_id: params[:province_id]
-      )
-    end
+    @address = if params[:address_id].present?
+                 current_user.addresses.find(params[:address_id])
+               else
+                 current_user.addresses.create!(
+                   street: params[:street],
+                   city: params[:city],
+                   postal_code: params[:postal_code],
+                   province_id: params[:province_id]
+                 )
+               end
 
     # Calculate totals
     province = @address.province
     subtotal = calculate_cart_total
 
-    if province.hst > 0
+    if province.hst.positive?
       hst_total = (subtotal * province.hst / 100).round(2)
       gst_total = 0
       pst_total = 0
@@ -46,7 +46,7 @@ class CheckoutController < ApplicationController
       pst_total: pst_total,
       hst_total: hst_total,
       total: total,
-      status: "pending"
+      status: 'pending'
     )
 
     # Create order items
@@ -60,19 +60,18 @@ class CheckoutController < ApplicationController
       )
     end
 
-
     # Clear cart
     session[:cart] = {}
 
-    redirect_to order_path(@order), notice: "Order placed successfully!"
+    redirect_to order_path(@order), notice: 'Order placed successfully!'
   end
 
   private
 
   def require_cart_items
-    if session[:cart].blank? || session[:cart].empty?
-      redirect_to cart_path, alert: "Your cart is empty."
-    end
+    return unless session[:cart].blank? || session[:cart].empty?
+
+    redirect_to cart_path, alert: 'Your cart is empty.'
   end
 
   def get_cart_items

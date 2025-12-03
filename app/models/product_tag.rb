@@ -2,11 +2,11 @@ class ProductTag < ApplicationRecord
   belongs_to :product
   belongs_to :tag
 
-  def self.ransackable_attributes(auth_object = nil)
-    [ "id", "product_id", "tag_id", "created_at", "updated_at" ]
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id product_id tag_id created_at updated_at]
   end
 
-  def self.ransackable_associations(auth_object = nil)
-    [ "product", "tag" ]
+  def self.ransackable_associations(_auth_object = nil)
+    %w[product tag]
   end
 end
