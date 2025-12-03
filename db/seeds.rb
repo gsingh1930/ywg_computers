@@ -54,3 +54,35 @@ end
 
 puts "Created #{Product.count} products"
 puts "Seeding complete!"
+
+# Create About and Contact pages
+Page.find_or_create_by!(slug: 'about') do |page|
+  page.title = 'About YWG Computers'
+  page.content = "YWG Computers is Winnipeg's premier computer hardware store, serving PC builders, gamers, students, and businesses since 2019.
+
+We offer a wide selection of CPUs, graphics cards, displays, storage devices, memory, and accessories from top brands.
+
+Our knowledgeable staff is here to help you find the perfect components for your build or upgrade.
+
+Visit us in Winnipeg or shop online for the best prices on computer hardware!"
+end
+
+Page.find_or_create_by!(slug: 'contact') do |page|
+  page.title = 'Contact Us'
+  page.content = "We'd love to hear from you!
+
+Address: 000 Adsum Drive, Winnipeg, MB R2P R2P
+
+Phone: 204-204-7780
+
+Email: info@ywgcomputers.ca
+
+Hours:
+Monday - Friday: 9am - 6pm
+Saturday: 10am - 5pm
+Sunday: Closed
+
+For online orders, please email orders@ywgcomputers.ca"
+end
+
+puts "Created About and Contact pages"

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "pages/show"
   devise_for :users
   ActiveAdmin.routes(self)
 
@@ -19,4 +20,6 @@ Rails.application.routes.draw do
 
   # Orders
   resources :orders, only: [ :index, :show ]
+
+  get ":slug", to: "pages#show", as: "page", constraints: { slug: /about|contact/ }
 end
