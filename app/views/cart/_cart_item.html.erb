@@ -1,18 +1,20 @@
 <tr>
   <td>
     <%= link_to cart_item[:product].name, product_path(cart_item[:product]) %>
+    <br>
+    <small class="text-muted d-md-none">$<%= number_with_precision(cart_item[:product].unit_price, precision: 2) %> each</small>
   </td>
-  <td>$<%= number_with_precision(cart_item[:product].unit_price, precision: 2) %></td>
+  <td class="d-none d-md-table-cell">$<%= number_with_precision(cart_item[:product].unit_price, precision: 2) %></td>
   <td>
-    <%= form_tag update_cart_path(cart_item[:product].id), method: :patch, class: 'd-flex align-items-center gap-2' do %>
-      <%= number_field_tag :quantity, cart_item[:quantity], min: 0, class: 'form-control', style: 'width: 80px;' %>
-      <%= submit_tag 'Update', class: 'btn btn-sm btn-outline-primary' %>
+    <%= form_tag update_cart_path(cart_item[:product].id), method: :patch, class: 'd-flex align-items-center gap-1' do %>
+      <%= number_field_tag :quantity, cart_item[:quantity], min: 0, class: 'form-control form-control-sm', style: 'width: 60px;' %>
+      <%= submit_tag '✓', class: 'btn btn-sm btn-outline-primary' %>
     <% end %>
   </td>
   <td>$<%= number_with_precision(cart_item[:item_total], precision: 2) %></td>
   <td>
     <%= link_to remove_from_cart_path(cart_item[:product].id), class: 'btn btn-sm btn-danger' do %>
-      <i class="bi bi-trash"></i> Remove
+      <i class="bi bi-trash"></i>
     <% end %>
   </td>
 </tr>
