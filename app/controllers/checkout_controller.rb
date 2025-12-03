@@ -55,9 +55,11 @@ class CheckoutController < ApplicationController
       product = Product.find(product_id)
       @order.order_items.create!(
         product: product,
-        quantity: quantity
+        quantity: quantity,
+        unit_price: product.unit_price
       )
     end
+
 
     # Clear cart
     session[:cart] = {}

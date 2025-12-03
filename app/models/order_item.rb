@@ -3,9 +3,14 @@ class OrderItem < ApplicationRecord
   belongs_to :product
 
   validates :quantity, presence: true, numericality: { greater_than: 0 }
+  validates :unit_price, presence: true
+
+  def item_total
+    unit_price * quantity
+  end
 
   def self.ransackable_attributes(auth_object = nil)
-    [ "id", "quantity", "order_id", "product_id", "created_at", "updated_at" ]
+    [ "id", "quantity", "unit_price", "order_id", "product_id", "created_at", "updated_at" ]
   end
 
   def self.ransackable_associations(auth_object = nil)

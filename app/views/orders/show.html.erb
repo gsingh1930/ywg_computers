@@ -12,7 +12,7 @@
             <tr>
               <th>Product</th>
               <th>Quantity</th>
-              <th>Price</th>
+              <th>Price (at purchase)</th>
               <th>Total</th>
             </tr>
           </thead>
@@ -21,8 +21,8 @@
               <tr>
                 <td><%= item.product.name %></td>
                 <td><%= item.quantity %></td>
-                <td>$<%= number_with_precision(item.product.unit_price, precision: 2) %></td>
-                <td>$<%= number_with_precision(item.product.unit_price * item.quantity, precision: 2) %></td>
+                <td>$<%= number_with_precision(item.unit_price, precision: 2) %></td>
+                <td>$<%= number_with_precision(item.item_total, precision: 2) %></td>
               </tr>
             <% end %>
           </tbody>
