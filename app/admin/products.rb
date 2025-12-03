@@ -17,15 +17,21 @@ ActiveAdmin.register Product do
     actions
   end
 
+  filter :name
+  filter :category
+  filter :unit_price
+  filter :stock_quantity
+  filter :on_sale
+
   form do |f|
     f.inputs do
       f.input :name
       f.input :description
       f.input :category
-      f.input :unit_price
-      f.input :stock_quantity
+      f.input :unit_price, min: 0
+      f.input :stock_quantity, min: 0
       f.input :on_sale
-      f.input :sale_price
+      f.input :sale_price, min: 0
       f.input :tags, as: :check_boxes, collection: Tag.all
       f.input :image, as: :file
     end
@@ -48,7 +54,7 @@ ActiveAdmin.register Product do
       end
       row :image do |product|
         if product.image.attached?
-          image_tag product.image, style: "max-width: 300px;"
+          image_tag product.image, style: 'max-width: 300px;'
         end
       end
     end
